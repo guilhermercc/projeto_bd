@@ -56,3 +56,32 @@ AND E.CPF IN (
     FROM COMENTARIOS C
 )
 ORDER BY E.CPF;
+
+
+-- 8. Projetar o nome de todos os espectadores e suas respectivas categorias de interesse (JUNÇÃO EXTERNA)
+
+SELECT E.NOME, CI.CATEGORIA_INTERESSE
+FROM ESPECTADOR E
+LEFT JOIN CATEGORIA_INTERESSE CI ON E.CPF = CI.CPF;
+
+
+-- 9. Projetar espectadores que também são seguidores (SEMI-JUNÇÃO)
+
+SELECT E.CPF, E.NOME
+FROM ESPECTADOR E
+WHERE EXISTS (
+    SELECT *
+    FROM SEGUE S
+    WHERE S.CPF_SEGUIDOR = E.CPF
+);
+
+
+-- 10. Projetar os espectadores que não fizeram comentários (ANTI-JUNÇÃO)
+
+SELECT E.CPF, E.NOME
+FROM ESPECTADOR E
+WHERE NOT EXISTS (
+    SELECT *
+    FROM COMENTARIOS C
+    WHERE C.CPF = E.CPF
+);
