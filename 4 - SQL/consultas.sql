@@ -25,3 +25,34 @@ WHERE (CT.CPF_STREAMER, CT.NOME_CANAL, CT.DURACAO) IN (
 SELECT E.CPF, E.NOME
 FROM ESPECTADOR E LEFT OUTER JOIN ASSINA A ON E.CPF = A.CPF_ESP
 WHERE A.CPF_STR IS NULL
+
+
+-- 5. Projetar o título e o número de visualizações do conteúdo com id = 2 (SUBSELECT ESCALAR)
+
+SELECT C.TITULO, (SELECT COUNT(*) FROM VISUALIZA V WHERE V.ID = C.ID) AS NUM_VISUALIZACOES
+FROM CONTEUDO C
+WHERE C.ID = 2;
+
+-- 6. Projetar o nome dos espectadores que assinam o Canal de João (SUBSELECT LINHA)
+
+SELECT E.NOME AS NOME_ESPECTADOR
+FROM ESPECTADOR E
+WHERE E.CPF IN (
+    SELECT A.CPF_ESP
+    FROM ASSINA A
+    WHERE A.NOME_CANAL = 'Canal de João'
+);
+
+-- 7. Projetar os os espectadores que assinam pelo menos um canal e que também possuem comentários em algum conteúdo
+
+SELECT E.CPF, E.NOME
+FROM ESPECTADOR E
+WHERE E.CPF IN (
+    SELECT A.CPF_ESP
+    FROM ASSINA A
+)
+AND E.CPF IN (
+    SELECT C.CPF
+    FROM COMENTARIOS C
+)
+ORDER BY E.CPF;
