@@ -4,7 +4,7 @@
 
 ## Projeto
 
-Elaboração de minimundo, modelo conceitual, modelo lógico e modelo físico de um plataforma de streaming de vídeos (StreamLive), com o escopo detalhado no minimundo
+Elaboração de minimundo, modelo conceitual, modelo lógico e modelo físico de um plataforma de vídeos (StreamVideo), com o escopo detalhado no minimundo
 
 ## Equipe
 
