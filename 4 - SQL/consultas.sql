@@ -115,13 +115,13 @@ AND NOT EXISTS (
 );
 
 
--- 14. Projete o nome dos espectadores que são assinantes do canal do streamer Breno. (Junção interna, Subconsulta)
+-- 14. Projete o nome dos espectadores que são assinantes do canal do streamer que possui o e-mail breninho@gmail.com. (Junção interna, Subconsulta)
 
 SELECT E.NOME
 FROM ESPECTADOR E INNER JOIN ASSINA A ON E.CPF = A.CPF_ESP
-WHERE (A.CPF_STR, A.NOME_CANAL) IN (SELECT C.CPF, C.NOME_CANAL
+WHERE (A.CPF_STR, A.NOME_CANAL) = (SELECT C.CPF, C.NOME_CANAL
 						   		FROM CANAL C INNER JOIN STREAMER S ON C.CPF = S.CPF
-                           		WHERE S.NOME = 'Breno')
+                           		WHERE S.EMAIL = 'breninho@gmail.com')
 
 
 -- 15. Projete o nome dos espectadores que visualizaram um conteúdo ou assinaram um canal (UNION)

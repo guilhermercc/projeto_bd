@@ -46,8 +46,8 @@ INSERT INTO STREAMER VALUES (77776666222, 'Carla', 'carla@email.com', 'senha789'
 INSERT INTO STREAMER VALUES (22223333444, 'Ricardo', 'ricardo@email.com', 'senha012', 12349876, 'Casa 909');
 INSERT INTO STREAMER VALUES (22223333487, 'Pedro', 'pedro@email.com', 'senha345', 12349879, 'Casa 302');
 INSERT INTO STREAMER VALUES (17899922333, 'Breno', 'breninho@gmail.com', 'breno123', 50720645, 'Casa 11A');
-INSERT INTO STREAMER VALUES (11119999233, 'Guilherme', 'guilherme2@email.com', 'abcde');
-INSERT INTO STREAMER VALUES (65239865412, 'José', 'jose@email.com', 'zezinho123');
+INSERT INTO STREAMER(CPF, NOME, EMAIL, SENHA) VALUES (11119999233, 'Guilherme', 'guilherme2@email.com', 'abcde');
+INSERT INTO STREAMER(CPF, NOME, EMAIL, SENHA) VALUES (65239865412, 'José', 'jose@email.com', 'zezinho123');
 
 -- INSERE CANAL
 INSERT INTO CANAL VALUES (77778888999, 'Canal de João', 'Canal sobre Tecnologia');
