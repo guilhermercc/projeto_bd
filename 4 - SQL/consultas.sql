@@ -132,3 +132,27 @@ WHERE E.CPF IN (
     UNION
     SELECT A.CPF_ESP FROM ASSINA A
 );
+
+-- 16. Identifique os CPFs de espectadores que seguem pelo menos um streamer da categoria Música 
+-- e encontre os CPFs dos espectadores que também comentaram em conteúdo desses streamers (INTERSECT)
+
+SELECT DISTINCT E.CPF
+FROM ESPECTADOR E
+WHERE E.CPF IN (
+    SELECT S.CPF_SEGUIDOR
+    FROM SEGUE S
+    WHERE S.CPF_SEGUIDO IN (
+        SELECT C.CPF
+        FROM CATEGORIA C
+        WHERE C.CATEGORIA = 'Música'
+    )
+)
+INTERSECT
+SELECT DISTINCT V.CPF
+FROM VISUALIZA V
+JOIN SEGUE S ON V.CPF = S.CPF_SEGUIDOR
+WHERE S.CPF_SEGUIDO IN (
+    SELECT C.CPF
+    FROM CATEGORIA C
+    WHERE C.CATEGORIA = 'Música'
+);
