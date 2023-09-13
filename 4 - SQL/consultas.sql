@@ -25,7 +25,7 @@ GROUP BY C.NOME_CANAL, C.DESCRICAO;
 
 SELECT E.CPF, E.NOME
 FROM ESPECTADOR E LEFT OUTER JOIN ASSINA A ON E.CPF = A.CPF_ESP
-WHERE A.CPF_STR IS NULL
+WHERE A.CPF_STR IS NULL;
 
 
 -- 5. Projetar o título e o número de visualizações do conteúdo com id = 2 (SUBCONSULTA TIPO ESCALAR)
@@ -93,7 +93,7 @@ WHERE NOT EXISTS (
 SELECT E.NOME
 FROM ESPECTADOR E
 WHERE E.CPF IN (SELECT CI.CPF 
-                FROM CATEGORIA_INTERESSE CI)
+                FROM CATEGORIA_INTERESSE CI);
 
 
 -- 12. Projete o nome do streamers que possuem um canal mas não tem um endereço completo cadastrado na plataforma (SUBCONSULTA TIPO TABELA)
@@ -126,7 +126,7 @@ SELECT E.NOME
 FROM ESPECTADOR E INNER JOIN ASSINA A ON E.CPF = A.CPF_ESP
 WHERE (A.CPF_STR, A.NOME_CANAL) = (SELECT C.CPF, C.NOME_CANAL
 						   		    FROM CANAL C INNER JOIN STREAMER S ON C.CPF = S.CPF
-                           		    WHERE S.EMAIL = 'breninho@gmail.com')
+                           		    WHERE S.EMAIL = 'breninho@gmail.com');
 
 
 -- 15. Projete o nome dos espectadores que visualizaram um conteúdo ou assinaram um canal (UNION)
