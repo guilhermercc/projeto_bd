@@ -157,4 +157,10 @@ WHERE S.CPF_SEGUIDO IN (
     WHERE C.CATEGORIA = 'Música'
 );
 
---17
+
+--17. Identifique quais espectadores comentaram mais de uma vez no mesmo conteúdo
+
+SELECT C.CPF, C.ID_CONTEUDO
+FROM COMENTARIOS C
+GROUP BY C.CPF, C.ID_CONTEUDO
+HAVING COUNT(*) > 1;
