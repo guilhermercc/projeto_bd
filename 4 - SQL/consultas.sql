@@ -138,29 +138,13 @@ WHERE E.CPF IN (
     SELECT A.CPF_ESP FROM ASSINA A
 );
 
--- 16. Identifique os CPFs de espectadores que seguem pelo menos um streamer da categoria Música 
--- e encontre os CPFs dos espectadores que também comentaram em conteúdo desses streamers (INTERSECT)
+--16. Projete os cpfs dos usuários possuem contas de espectador e streamers, mas possuem o mesmo email nas duas contas
 
-SELECT E.CPF
+SELECT E.CPF, E.EMAIL
 FROM ESPECTADOR E
-WHERE E.CPF IN (
-    SELECT S.CPF_SEGUIDOR
-    FROM SEGUE S
-    WHERE S.CPF_SEGUIDO IN (
-        SELECT C.CPF
-        FROM CATEGORIA C
-        WHERE C.CATEGORIA = 'Música'
-    )
-)
 INTERSECT
-SELECT V.CPF
-FROM VISUALIZA V
-JOIN SEGUE S ON V.CPF = S.CPF_SEGUIDOR
-WHERE S.CPF_SEGUIDO IN (
-    SELECT C.CPF
-    FROM CATEGORIA C
-    WHERE C.CATEGORIA = 'Música'
-);
+SELECT S.CPF, S.EMAIL
+FROM STREAMER S
 
 
 --17. Identifique quais espectadores comentaram mais de uma vez no mesmo conteúdo(GROUP BY, HAVING)
