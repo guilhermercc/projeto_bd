@@ -83,7 +83,7 @@ WHERE NOT EXISTS (
 );
 
 
--- 11. Liste os nomes dos espectadores que têm pelo menos uma categoria de interesse associada. (Subconsulta do Tipo Tabela)
+-- 11. Projete os nomes dos espectadores que têm pelo menos uma categoria de interesse associada. (Subconsulta do Tipo Tabela)
 
 SELECT E.NOME
 FROM ESPECTADOR E
@@ -91,7 +91,7 @@ WHERE E.CPF IN (SELECT CI.CPF
                 FROM CATEGORIA_INTERESSE CI)
 
 
--- 12. Liste os CPFs dos espectadores que possuem mais de um e-mail cadastrado. (GROUP BY, HAVING) AJUSTAR
+-- 12. Projete os CPFs dos espectadores que possuem mais de um e-mail cadastrado. (GROUP BY, HAVING) AJUSTAR
 
 SELECT EM.CPF
 FROM EMAIL_ESPECTADOR EM
@@ -115,10 +115,20 @@ AND NOT EXISTS (
 );
 
 
--- 14. Identifique o nome espectadores que são assinantes do canal do streamer Breno. (Junção interna, Subconsulta)
+-- 14. Projete o nome dos espectadores que são assinantes do canal do streamer Breno. (Junção interna, Subconsulta)
 
 SELECT E.NOME
 FROM ESPECTADOR E INNER JOIN ASSINA A ON E.CPF = A.CPF_ESP
 WHERE (A.CPF_STR, A.NOME_CANAL) IN (SELECT C.CPF, C.NOME_CANAL
 						   		FROM CANAL C INNER JOIN STREAMER S ON C.CPF = S.CPF
                            		WHERE S.NOME = 'Breno')
+
+
+-- 15. Projete o nome dos espectadores que visualizaram um conteúdo ou assinaram um canal (UNION)
+
+SELECT E.NOME FROM ESPECTADOR E
+WHERE E.CPF IN (
+    SELECT V.CPF FROM VISUALIZA V
+    UNION
+    SELECT A.CPF_ESP FROM ASSINA A
+);
