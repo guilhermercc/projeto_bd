@@ -21,7 +21,7 @@ INNER JOIN CONTEUDO CT ON C.CPF = CT.CPF_STREAMER AND C.NOME_CANAL = CT.NOME_CAN
 GROUP BY C.NOME_CANAL, C.DESCRICAO;
 
 
--- 4. Projete O nome e o CPF dos espectadores que não assinam nenhum canal (LEFT OUTER JOIN)
+-- 4. Projete o nome e o CPF dos espectadores que não assinam nenhum canal (LEFT OUTER JOIN)
 
 SELECT E.CPF, E.NOME
 FROM ESPECTADOR E LEFT OUTER JOIN ASSINA A ON E.CPF = A.CPF_ESP
@@ -96,12 +96,12 @@ WHERE E.CPF IN (SELECT CI.CPF
                 FROM CATEGORIA_INTERESSE CI)
 
 
--- 12. Projete os CPFs dos espectadores que possuem mais de um e-mail cadastrado. (GROUP BY, HAVING) AJUSTAR
+-- 12. Projete o nome do streamers que possuem um canal mas não tem um endereço completo cadastrado na plataforma (SUBCONSULTA TIPO TABELA)
 
-SELECT EM.CPF
-FROM EMAIL_ESPECTADOR EM
-GROUP BY EM.CPF
-HAVING COUNT(EM.EMAIL) > 1;
+SELECT S.NOME
+FROM STREAMER S
+WHERE S.CPF IN (SELECT C.CPF FROM CANAL C)
+AND S.END_CEP IS NULL OR S.END_COMPLEMENTO IS NULL;
 
 
 -- 13. Identifique os espectadores que não seguem outros espectadores e não assinam nenhum canal. (ANTI-JOIN)
@@ -141,7 +141,7 @@ WHERE E.CPF IN (
 -- 16. Identifique os CPFs de espectadores que seguem pelo menos um streamer da categoria Música 
 -- e encontre os CPFs dos espectadores que também comentaram em conteúdo desses streamers (INTERSECT)
 
-SELECT DISTINCT E.CPF
+SELECT E.CPF
 FROM ESPECTADOR E
 WHERE E.CPF IN (
     SELECT S.CPF_SEGUIDOR
@@ -153,7 +153,7 @@ WHERE E.CPF IN (
     )
 )
 INTERSECT
-SELECT DISTINCT V.CPF
+SELECT V.CPF
 FROM VISUALIZA V
 JOIN SEGUE S ON V.CPF = S.CPF_SEGUIDOR
 WHERE S.CPF_SEGUIDO IN (
@@ -165,7 +165,7 @@ WHERE S.CPF_SEGUIDO IN (
 
 --17. Identifique quais espectadores comentaram mais de uma vez no mesmo conteúdo(GROUP BY, HAVING)
 
-SELECT C.CPF, C.ID_CONTEUDO
+SELECT C.CPF, C.ID_CONTEUDO, COUNT(*) AS QUANTIDADE
 FROM COMENTARIOS C
 GROUP BY C.CPF, C.ID_CONTEUDO
 HAVING COUNT(*) > 1;
